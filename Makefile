@@ -9,6 +9,7 @@ config:
 		rm ./.git/hooks/pre-commit;\
 	fi
 	cp ./git/pre-commit.sh ./.git/hooks/pre-commit
+	chmod u+x .git/hooks/pre-commit
 
 format:
 	@gofmt  -l -w $(SRC)
