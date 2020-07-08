@@ -2,8 +2,9 @@ SRC = $$(go list  -f {{.Dir}} ./... | grep -vE "./*/testing" | grep -vE "./*/gen
 PACKAGES = $$(go list ./... | grep -vE "./*/testing" | grep -vE "./*/gen" | grep -v /vendor/)
 
 config:
-	go install github.com/dave/courtney
+	go get -u github.com/dave/courtney
 
+	go mod tidy
 	go mod vendor
 
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.28.0
