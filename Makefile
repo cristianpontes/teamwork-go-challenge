@@ -2,7 +2,7 @@ SRC = $$(go list  -f {{.Dir}} ./... | grep -vE "./*/testing" | grep -vE "./*/gen
 PACKAGES = $$(go list ./... | grep -vE "./*/testing" | grep -vE "./*/gen" | grep -v /vendor/)
 
 config:
-	go install https://github.com/dave/courtney
+	go install github.com/dave/courtney
 
 	go mod vendor
 
