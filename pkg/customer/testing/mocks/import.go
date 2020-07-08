@@ -5,10 +5,12 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
+// ImporterMock - provides a mock for customer.Importer
 type ImporterMock struct {
 	mock.Mock
 }
 
+// FromCSV - provides a mock for customer.Importer.FromCSV
 func (i *ImporterMock) FromCSV(csv []byte) (*customer.Customers, error) {
 	args := i.Called(csv)
 

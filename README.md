@@ -1,4 +1,6 @@
 ![alt text](https://www.teamwork.com/app/themes/teamwork-theme/dist/images/twork-slate.svg "Teamwork")
+[![Go Report Card](https://goreportcard.com/badge/github.com/cristianpontes/teamwork-go-challenge)](https://goreportcard.com/report/github.com/cristianpontes/teamwork-go-challenge)
+[![Build Status](https://travis-ci.org/cristianpontes/teamwork-go-challenge.svg?branch=master)](https://travis-ci.org/cristianpontes/teamwork-go-challenge)
 
 # Teamwork - Go Challenge
 This repository contains my solution for the Teamwork coding challenge assignment.

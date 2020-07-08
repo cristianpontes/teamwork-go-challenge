@@ -11,31 +11,31 @@ import (
 	"github.com/cristianpontes/teamwork-go-challenge/pkg/log"
 )
 
-type Importer struct {
+type importer struct {
 	logger   log.Logger
 	importer customer.Importer
 }
 
-func NewImporter(lg log.Logger, ci customer.Importer) *Importer {
-	return &Importer{
+func newImporter(lg log.Logger, ci customer.Importer) *importer {
+	return &importer{
 		logger:   lg,
 		importer: ci,
 	}
 }
 
-func (i *Importer) Execute(filePath string, detailedReport bool) error {
+func (i *importer) execute(filePath string, detailedReport bool) error {
 	absPath, err := filepath.Abs(filePath)
-	if err != nil {
+	if err != nil { // notest
 		return err
 	}
 
 	csvContents, err := ioutil.ReadFile(filepath.Clean(absPath))
-	if err != nil {
+	if err != nil { // notest
 		return err
 	}
 
 	customers, err := i.importer.FromCSV(csvContents)
-	if err != nil {
+	if err != nil { // notest
 		return err
 	}
 
@@ -50,7 +50,7 @@ func (i *Importer) Execute(filePath string, detailedReport bool) error {
 	return i.generateSimplifiedReport(groups)
 }
 
-func (i *Importer) generateSimplifiedReport(groups customer.GroupedCustomers) error {
+func (i *importer) generateSimplifiedReport(groups customer.GroupedCustomers) error {
 	var report strings.Builder
 
 	report.WriteString("\n")
@@ -69,7 +69,7 @@ func (i *Importer) generateSimplifiedReport(groups customer.GroupedCustomers) er
 	return nil
 }
 
-func (i *Importer) generateDetailedReport(groups customer.GroupedCustomers) error {
+func (i *importer) generateDetailedReport(groups customer.GroupedCustomers) error {
 	report, err := json.MarshalIndent(groups, "", "  ")
 	if err != nil {
 		return err

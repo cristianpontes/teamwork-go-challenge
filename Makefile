@@ -1,6 +1,9 @@
-SRC = $(shell find . -type f -name '*.go' -not -path "./vendor/*" -not -path "*/gen/*")
+SRC = $$(go list  -f {{.Dir}} ./... | grep -vE "./*/testing" | grep -vE "./*/gen" | grep -v /vendor/)
+PACKAGES = $$(go list ./... | grep -vE "./*/testing" | grep -vE "./*/gen" | grep -v /vendor/)
 
 config:
+	go install https://github.com/dave/courtney
+
 	go mod vendor
 
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.28.0
@@ -22,8 +25,8 @@ install:
 	go build -o $(GOPATH)/bin/tw-go-challenge ./cmd/customer
 
 test:
-	go test ./...
+	courtney -e $(PACKAGES)
 
 coverage-report:
-	 go test -coverprofile=coverage.out ./...
-	 go tool cover -html=coverage.out
+	courtney -e $(PACKAGES)
+	go tool cover -html=coverage.out

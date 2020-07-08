@@ -6,13 +6,14 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// Logger represents contract that any logging implementation must follow
 type Logger interface {
 	Info(msg string)
 	Error(msg error)
 	SetOutput(w io.Writer)
 }
 
-type Log struct {
+type logger struct {
 	log    *logrus.Logger
 	config struct {
 		appName string
@@ -20,8 +21,9 @@ type Log struct {
 	}
 }
 
+// New creates a new logger using the default implementation
 func New(appName, vendor string) Logger {
-	r := &Log{}
+	r := &logger{}
 	r.log = logrus.New()
 	r.config.appName = appName
 	r.config.vendor = vendor
@@ -29,19 +31,22 @@ func New(appName, vendor string) Logger {
 	return r
 }
 
-func (l *Log) SetOutput(w io.Writer) {
+// SetOutput sets the output to where logs will be written
+func (l *logger) SetOutput(w io.Writer) {
 	l.log.Out = w
 }
 
-func (l *Log) Info(msg string) {
+// Info logs a message as `info`
+func (l *logger) Info(msg string) {
 	l.log.WithFields(l.getFields()).Info(msg)
 }
 
-func (l *Log) Error(err error) {
+// Info logs a message as `error`
+func (l *logger) Error(err error) {
 	l.log.WithFields(l.getFields()).Error(err.Error())
 }
 
-func (l *Log) getFields() logrus.Fields {
+func (l *logger) getFields() logrus.Fields {
 	return logrus.Fields{
 		"application_name": l.config.appName,
 		"vendor":           l.config.vendor,

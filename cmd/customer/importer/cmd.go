@@ -8,13 +8,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func Command(
-	lg log.Logger,
-	ci customer.Importer,
-) *cobra.Command {
+// Command returns the entry point for the customer importer functionality
+func Command(lg log.Logger, ci customer.Importer) *cobra.Command { // notest
 	c := cobra.Command{
 		Use:   "importer",
-		Short: "Customer importer reads from a csv file and returns a sorted list of email domains along with the number of customers with e-mail addresses for each domain.",
+		Short: "Customer importer reads from a csv file and returns a sorted list of email domains along with the number of customers with e-mail addresses for each domain.", // nolint:lll
 	}
 
 	args, err := newArgs(&c)
@@ -23,9 +21,9 @@ func Command(
 	}
 
 	c.Run = func(*cobra.Command, []string) {
-		importer := NewImporter(lg, ci)
+		importer := newImporter(lg, ci)
 
-		if err := importer.Execute(args.ImportCSV, false); err != nil {
+		if err := importer.execute(args.ImportCSV, args.DetailedReport); err != nil {
 			lg.Error(err)
 			os.Exit(1)
 		}
