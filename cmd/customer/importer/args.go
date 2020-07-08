@@ -23,7 +23,7 @@ func newArgs(cmd *cobra.Command) (*args, error) { // notest
 		"detailed-report",
 		"",
 		false,
-		"Show detailed import report by showing the full list of customers by domain email",
+		"Show detailed import report by showing the full list of customers by domain email [true|false]",
 	)
 
 	if err := cmd.MarkFlagRequired("file"); err != nil {
