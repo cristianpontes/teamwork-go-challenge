@@ -112,6 +112,6 @@ $ tw-go-challenge importer  --file ./cmd/customer/importer/testing/stubs/custome
 
 ## What would I have done differently?
 
-Since we're talking about grouping customers by their email's domain, which would often be represented as `map[string][]*Customer`, it didn't make much sense to make the process concurrent, there wouldn't be in major performance gains since sharing a map among a pool of workers would require to make it thread-safe (ie: via mutex), which would turn out to be the by the main bottleneck. 
+Since we're talking about grouping customers by their email's domain, which would often be represented as `map[string][]*Customer`, it didn't make much sense to make the process concurrent, there wouldn't be major performance gains since sharing a map among a pool of workers would require to make it thread-safe (ie: via mutex), which would turn out to be the main bottleneck. 
 
 In a real project, where there're millions of customers and different requirements/features, I would have developed this in a more distributed way. For example: reading the file in chunks, having a pipeline for channels, maybe allowing for pre-sorted data so grouping can be more efficient, etc.
